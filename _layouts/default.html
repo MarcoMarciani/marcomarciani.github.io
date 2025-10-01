@@ -1,0 +1,51 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <title>{{ page.title | default: "homepage Marco Marciani" }}</title>
+
+    <!-- use relative_url so CSS/JS paths work for project pages too -->
+    <link rel="stylesheet" href="{{ '/assets/css/main.css' | relative_url }}" />
+  </head>
+  <body class="is-preload">
+
+    <!-- Wrapper -->
+    <div id="wrapper">
+
+      <!-- Main -->
+      <div id="main">
+        <div class="inner">
+
+          <!-- Header -->
+          <header id="header">
+            <a href="{{ '/' | relative_url }}" class="logo"><strong>Marco Marciani</strong> portfolio and more</a>
+            <ul class="icons">
+              <li><a href="https://www.linkedin.com/in/marco-marciani-7a8357144/?originalSubdomain=it" class="icon brands fa-linkedin"><span class="label">LinkedIn</span></a></li>
+            </ul>
+          </header>
+
+          <!-- Page content inserted here -->
+          {{ content }}
+
+        </div>
+      </div>
+      <!-- Sidebar (included from _includes/sidebar.html) -->
+      {% include sidebar.html %}
+    </div>
+    <footer id="site-footer">
+      <p></p>
+    </footer>
+
+
+    <!-- Scripts -->
+    <script src="{{ '/assets/js/jquery.min.js' | relative_url }}"></script>
+    <script src="{{ '/assets/js/browser.min.js' | relative_url }}"></script>
+    <script src="{{ '/assets/js/breakpoints.min.js' | relative_url }}"></script>
+    <script src="{{ '/assets/js/util.js' | relative_url }}"></script>
+    <script src="{{ '/assets/js/main.js' | relative_url }}"></script>
+
+  </body>
+</html>
+
+
