@@ -265,42 +265,220 @@
 
 			
 
-			document.addEventListener('DOMContentLoaded', function () {
-  document.querySelectorAll('.expandable-article').forEach(function (article) {
-    const expandBtn = article.querySelector('.expand-btn');
-    const collapseBtn = article.querySelector('.collapse-btn');
-    const dots = article.querySelector('.dots');
-    const more = article.querySelector('.more');
+		document.addEventListener('DOMContentLoaded', function () {
+			document.querySelectorAll('.expandable-article').forEach(function (article) {
+				const expandBtn = article.querySelector('.expand-btn');
+				const collapseBtn = article.querySelector('.collapse-btn');
+				const dots = article.querySelector('.dots');
+				const more = article.querySelector('.more');
 
-    if (!expandBtn || !collapseBtn || !dots || !more) return;
+				if (!expandBtn || !collapseBtn || !dots || !more) return;
 
-    // Ensure initial visual state (in case CSS/theme shows both)
-    expandBtn.style.display = 'inline-block';
-    collapseBtn.style.display = 'none';
-    more.hidden = true;
-    dots.style.display = 'inline';
+				// Ensure initial visual state (in case CSS/theme shows both)
+				expandBtn.style.display = 'inline-block';
+				collapseBtn.style.display = 'none';
+				more.hidden = true;
+				dots.style.display = 'inline';
 
-    expandBtn.addEventListener('click', function (ev) {
+				expandBtn.addEventListener('click', function (ev) {
+				ev.preventDefault();
+				dots.style.display = 'none';
+				more.hidden = false;
+				expandBtn.style.display = 'none';
+				collapseBtn.style.display = 'inline-block';
+				expandBtn.setAttribute('aria-expanded', 'true');
+				collapseBtn.setAttribute('aria-expanded', 'true');
+				});
+
+				collapseBtn.addEventListener('click', function (ev) {
+				ev.preventDefault();
+				dots.style.display = 'inline';
+				more.hidden = true;
+				expandBtn.style.display = 'inline-block';
+				collapseBtn.style.display = 'none';
+				expandBtn.setAttribute('aria-expanded', 'false');
+				collapseBtn.setAttribute('aria-expanded', 'false');
+				});
+			});
+			
+		
+
+		});
+
+		document.addEventListener('DOMContentLoaded', () => {
+  const ZOOM = 2.35; // zoom factor on hover
+  const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+
+  // Helper to attach appropriate pointer/mouse handlers
+  function attachPanHandlers(container) {
+    const img = container.querySelector('img');
+    if (!img) return;
+
+    // Prevent anchor navigation if <a href="#"> ...
+    container.addEventListener('click', ev => {
+      // stop anchor from navigating
       ev.preventDefault();
-      dots.style.display = 'none';
-      more.hidden = false;
-      expandBtn.style.display = 'none';
-      collapseBtn.style.display = 'inline-block';
-      expandBtn.setAttribute('aria-expanded', 'true');
-      collapseBtn.setAttribute('aria-expanded', 'true');
     });
 
-    collapseBtn.addEventListener('click', function (ev) {
-      ev.preventDefault();
-      dots.style.display = 'inline';
-      more.hidden = true;
-      expandBtn.style.display = 'inline-block';
-      collapseBtn.style.display = 'none';
-      expandBtn.setAttribute('aria-expanded', 'false');
-      collapseBtn.setAttribute('aria-expanded', 'false');
-    });
-  });
+    // Debug: confirm attachment
+    console.log('attachPanHandlers on', container);
+
+    // State
+    let active = false;
+    let startX = 0, startY = 0, startTx = 0, startTy = 0;
+    let tx = 0, ty = 0;
+    let pointerId = null;
+
+    const computeLimits = () => {
+      const baseW = container.clientWidth;
+      const baseH = container.clientHeight;
+      const scaledW = baseW * ZOOM;
+      const scaledH = baseH * ZOOM;
+      const maxX = Math.max(0, (scaledW - baseW) / 2);
+      const maxY = Math.max(0, (scaledH - baseH) / 2);
+      return { maxX, maxY };
+    };
+
+    const applyTransform = () => {
+      img.style.transform = `translate(${tx}px, ${ty}px) scale(${ZOOM})`;
+    };
+
+    // Pointer / mouse handlers
+    function start(evClientX, evClientY, id = null) {
+      active = true;
+      pointerId = id;
+      startX = evClientX;
+      startY = evClientY;
+      startTx = tx;
+      startTy = ty;
+      container.classList.add('panning');
+      // clamp initial
+      const { maxX, maxY } = computeLimits();
+      tx = clamp(tx, -maxX, maxX);
+      ty = clamp(ty, -maxY, maxY);
+      applyTransform();
+    }
+    function move(evClientX, evClientY, id = null) {
+      if (!active) return;
+      if (id !== null && id !== pointerId) return;
+      const dx = evClientX - startX;
+      const dy = evClientY - startY;
+      const { maxX, maxY } = computeLimits();
+      tx = clamp(startTx + dx, -maxX, maxX);
+      ty = clamp(startTy + dy, -maxY, maxY);
+      applyTransform();
+    }
+    function end(id = null) {
+      if (id !== null && id !== pointerId) return;
+      active = false;
+      pointerId = null;
+      container.classList.remove('panning');
+      // keep zoom/pan visible; if you prefer to reset automatically, uncomment:
+      // img.style.transform = ''; tx = ty = 0;
+    }
+
+    // Pointer events (preferred)
+    if (window.PointerEvent) {
+      container.style.touchAction = 'none'; // ensure pointer events for touch
+      container.addEventListener('pointerdown', ev => {
+        // only primary pointer
+        if (ev.button && ev.button !== 0) return;
+        ev.preventDefault();
+        container.setPointerCapture(ev.pointerId);
+        start(ev.clientX, ev.clientY, ev.pointerId);
+      }, { passive: false });
+
+      container.addEventListener('pointermove', ev => {
+        ev.preventDefault();
+        move(ev.clientX, ev.clientY, ev.pointerId);
+      }, { passive: false });
+
+      container.addEventListener('pointerup', ev => {
+        ev.preventDefault();
+        try { container.releasePointerCapture(ev.pointerId); } catch(e) {}
+        end(ev.pointerId);
+      });
+
+      container.addEventListener('pointercancel', ev => {
+        end(ev.pointerId);
+      });
+    } else {
+      // Fallback to mouse & touch
+      container.addEventListener('mousedown', ev => {
+        if (ev.button !== 0) return;
+        ev.preventDefault();
+        start(ev.clientX, ev.clientY, null);
+      });
+      window.addEventListener('mousemove', ev => {
+        move(ev.clientX, ev.clientY, null);
+      });
+      window.addEventListener('mouseup', ev => {
+        end(null);
+      });
+
+      // basic touch fallback
+      container.addEventListener('touchstart', ev => {
+        if (ev.touches.length !== 1) return;
+        ev.preventDefault();
+        const t = ev.touches[0];
+        start(t.clientX, t.clientY, null);
+      }, { passive: false });
+      container.addEventListener('touchmove', ev => {
+        if (ev.touches.length !== 1) return;
+        ev.preventDefault();
+        const t = ev.touches[0];
+        move(t.clientX, t.clientY, null);
+      }, { passive: false });
+      container.addEventListener('touchend', ev => {
+        end(null);
+      });
+    }
+
+	// ADD this block (replace the deleted dblclick)
+function resetTransform() {
+  // reset state
+  tx = 0; ty = 0;
+  img.style.transition = 'transform 0.18s ease';
+  img.style.transform = '';
+  container.classList.remove('panning');
+  // clear transition after it finishes
+  setTimeout(() => { img.style.transition = ''; }, 220);
+}
+
+// pointerleave (preferred)
+container.addEventListener('pointerleave', (ev) => {
+  // End any active pan and reset visual state
+  try { container.releasePointerCapture(ev.pointerId); } catch (e) {}
+  end(ev.pointerId);
+  resetTransform();
 });
+
+// fallback for browsers without pointerleave
+container.addEventListener('mouseleave', (ev) => {
+  end(null);
+  resetTransform();
+});
+
+// also handle pointercancel just to be safe
+container.addEventListener('pointercancel', (ev) => {
+  end(ev.pointerId);
+  resetTransform();
+});
+
+    // As extra safety, also listen for click to prevent anchor default that could interfere
+    container.addEventListener('click', ev => {
+      ev.preventDefault();
+    });
+  } // end attachPanHandlers
+
+  // Attach to all a.image containers
+  document.querySelectorAll('a.image').forEach(el => {
+    attachPanHandlers(el);
+  });
+
+});
+
+
 
 
 })(jQuery);
