@@ -40,8 +40,58 @@
 <!-- Section -->
 	<section>
 		<div class="posts">
-				
+						
 			<article class="expandable-article">
+				<header class="major">
+					<h2>Quantum Algorithm & industry</h2>
+				</header>
+				<a class="image"><img src="/images/pic_quantum_algo.png" alt=""  style="width:70%"/></a>
+				<p align="justify"> 
+					Quantum algorithms speed up certain computations that are very demanding on classical hardware. 
+The reason for this advantage lies in the <b>computational space</b>. At any time, the computational state of a classical hardware is a specific
+ configuration of the n bits, for instance 011001110, out of the 2^n total configurations.
+  Instead, in a quantum computer with n qubits, <span class="dots">...</span><span class="more" hidden> the state is a (amplitude-)distribution over such configurations.
+   So, the computational space is much bigger, enabling <b>parallel manipulation</b> of classically relevant states.
+    The trade-off is that quantum states are fragile and the read-out of the results is often a bottleneck.
+	 For this reason, only a limited number of quantum algorithms has been shown to be really faster. 
+					
+I'm currently working on an <b>industrial project</b> (under NDA) together with a consulting firm that aims at bringing one specific algorithm
+ more down to earth. Indeed, often industrial problems require a variant of a publicly-known algorithm.
+  Under which conditions -- number of qubits, type of algorithm (analogic or gate-based) and so on -- 
+  will this quantum algorithm show <b>quantum advantage</b> and outperform the known classical algorithms that are known for this problem?</span></p>
+				<div class="article-actions">
+					<button class="expand-btn">Read more</button>
+					<button class="collapse-btn" hidden>Read less</button>
+				</div>		
+			</article>	
+
+			<article class="expandable-article">
+				<header class="major">
+					<h2>Dissipative quantum systems</h2>
+				</header>
+				<a class="image"><img src="/images/pic_NJJ.png" alt=""  style="width:80%"/></a>
+				<p align="justify"> 
+					To a great extent, it is possible to study a classical systems in isolation, that is, without considering the effect of the environment. 
+					Often friction and radiative losses can be neglected from the energy budget of the system.
+					This is not the case for quantum systems, where the <b>interaction with the environment</b> is typically strong<span class="dots">...</span><span class="more" hidden> since the system energies
+					are as small as those related to the friction and losses.
+					<b>Josephson junctions</b> (JJ) are superconducting devices -- made with aluminium or niobium or tantalum, etc. -- 
+					where some energy states are well separated from
+					the other energies. Separation means that a good control may be achieved, in particular, to encode qubits. In transmonic devices
+					qubit coherence times can execeed hundreds of microseconds but longer times are needed to achieve robust quantum computing and storage.
+
+					I studied the effect that a metallic substrate of a JJ has on the <b>dissipation</b> of the current flowing across the device. Dissipation can be
+					described by Hamiltonian terms that induce non-Hermiticity, and in turns, complex energy levels. <b>Non-Hermitian physics</b> is been a hot
+					topic in optics and is nowadays gaining attention in condensed matter. Can the reachness and simplicity of non-Hermitian physics be exploited to engineer
+					JJ with peculiar and non-intuitive properties? Can coherence times be engineered using the dissipation itself? This are only some of the questions
+					that I am trying to answer.</span></p>
+				<div class="article-actions">
+					<button class="expand-btn">Read more</button>
+					<button class="collapse-btn" hidden>Read less</button>
+				</div>
+
+			</article>	
+				<article class="expandable-article">
 				<header class="major">
 					<h2>RMT of mesoscopic systems</h2>
 				</header>
@@ -50,9 +100,9 @@
 				<p align="justify"> I devoted most part of the Ph.D. to the study of the <b>random-matrix theory</b> (RMT) for quantum dots
 					hosting unpaired Majorana states. <b>Quantum dots</b> are artificial atoms -- that is, with discrete energies -- that emerge at interfaces
 					between different electronic materials at micron and submicron level.
-					Majorana states are predicted to appear at the boundaries of topological superconductors
+					Majorana states are predicted to appear <span class="dots">...</span><span class="more">at the boundaries of topological superconductors
 					and they are of great interest for <b>quantum computation</b>. A couple of two spatially-separated unpaired Majorana states
-					can be used to encode a non-local qubit<span class="dots">...</span><span class="more"> that is expected to be robust
+					can be used to encode a non-local qubit that is expected to be robust
 					against moderate imperfections of fabrication. Considering that the solid state community is putting a lot of efforts
 					in detecting such states, it is natural to ask which thermodynamic signatures of Majorana states
 					are likely to stay visible in a randomly disordered interface. Will the disorder wash out any signature of their presence? 
@@ -69,36 +119,45 @@
 
 			</article>
 
-				
-			<article class="expandable-article">
-				<header class="major">
-					<h2>Dissipative quantum systems</h2>
-				</header>
-				<a class="image"><img src="/images/pic_NJJ.png" alt=""  style="width:80%"/></a>
-				<p align="justify"> 
-					To a great extent, it is possible to study a classical systems in isolation, that is, without considering the effect of the environment. 
-					Often friction and radiative losses can be neglected from the energy budget of the system.
-					This is not the case for quantum systems, where the <b>interaction</b> with the environment is typically strong<span class="dots">...</span><span class="more" hidden> since the system energies
-					are as small as those related to the friction and losses.
-					<b>Josephson junctions</b> (JJ) are superconducting devices -- made with aluminium or niobium or tantalum, etc. -- 
-					where some energy states are well separated from
-					the other energies. Separation means that a good control may be achieved, in particular, to encode qubits. In transmonic devices
-					qubit coherence times can execeed hundreds of microseconds but longer times are needed to achieve robust quantum computing and storage.
+		</div>
 
-					I studied the effect that a metallic substrate of a JJ has on the <b>dissipation</b> of the current flowing across the device. Dissipation can be
-					described by Hamiltonian terms that induce non-Hermiticity, and in turns, complex energy levels. <b>Non-Hermitian physics</b> is been a hot
-					topic in optics and is nowadays gaining attention in condensed matter. Can the reachness and simplicity of non-Hermitian physics be exploited to engineer
-					JJ with peculiar and non-intuitive properties? Can coherence times be engineered using the dissipation itself? This are only some of the questions
-					that I am trying to answer.</span></p>
-				<div class="article-actions">
-					<button class="expand-btn">Read more</button>
-					<button class="collapse-btn" hidden>Read less</button>
-				</div>
-			</article>	
+
+
+		<div class="posts">
+
+						</article>	
+				<article class="expandable-article">
+				<header class="major">
+					<h2>Artificial non-commutative crystals</h2>
+				</header>
 			
+				<a href="#" class="image"><img src="/images/pic_artif_cryst.png"  alt="" /></a>
+				<p align="justify"> 		Artificial non-commutative crystals
+
+Artificial crystals <b>let us go beyond</b> the contraints imposed by Chemistry.
+ They are systems with regular patterns but with atoms replaced by other artificial,
+  fundamental units, for instance <b>circuit resonators</b> or mechanical springs. 
+  What typically moves inside these devices are bosonic particle modes (light, vibrations etc...), 
+  and their behavior can display interesting Physics<span class="dots">...</span><span class="more">.  
+  For instance, there have been experimental implementations of hyperbolic curved geometries which would be 
+  impossible for natural crystals in our Euclidean space. Unfortunately, such implementations were quite awkward.
+   I contributed the topic showing that artificial crystals can be used to <b>mimic the motion of electrons</b> under
+    magnetic fields even though no magnetic field is applied from outside. What is more, several electrons
+	 can be dropped in the lattice in such a way that they all bear a different magnetic field configuration.
+	  And all of this generalizes to <b>arbitrary gauge-fields<b> while keeping the crystal architecture very scalable 
+	  and apt for experimental realizations. This is very exciting and goes in the direction of implementing 
+	  a full lattice gauge theory. Will it happen?</span></p>
+					  <div class="article-actions">
+						<button class="expand-btn">Read more</button>
+						<button class="collapse-btn" hidden>Read less</button>
+					</div>
+			</article>
+
+		</div>
+
 			<article>
 				<header class="major">
-					<h2>Coming soon...</h2>
+					<h2>More topics to come...</h2>
 				</header>
 				<p>
 					This page is under construction.
